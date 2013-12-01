@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, AutoEduActivity!</string>
+    <string name="app_name">AutoEdu</string>
+    <string name="login_successed">登陆成功\no(≧v≦)o</string>
+    <string name="start_login">正在连接...</string>
+    <string name="login_failed">登陆失败\n-_-!</string>
+
+</resources>
