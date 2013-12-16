@@ -125,7 +125,7 @@ public class LoginInThread extends Thread{
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 			HttpResponse response = httpClient.execute(httpPost);
 			String html = EntityUtils.toString(response.getEntity());
-			System.out.println(html);
+//			System.out.println(html);
 			if(isLoginSuccess(html)){
 				sendMyMessage(AutoEduActivity.LOGIN_SUCCESSED);
 				return true;

@@ -2,6 +2,8 @@ package com.withparadox2.autoedu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,6 +43,8 @@ public class AutoEduActivity extends Activity {
 	private MyHandler myHandler;
 	private Button refreshButton;
 
+	private Timer myTimer;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,16 @@ public class AutoEduActivity extends Activity {
 			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
 			loginInThread.start();
 		}
+		autoUpdateEdu();
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if(myTimer != null){
+			myTimer.cancel();
+		}
 	}
 
 	private class OnButtonClickListener implements OnClickListener{
@@ -150,5 +163,18 @@ public class AutoEduActivity extends Activity {
 		list.add(sp.getString(WLANACNAME, ""));
 		list.add(sp.getString(WLANUSERIP, ""));
 		return list;
+	}
+
+	private void autoUpdateEdu(){
+		if(myTimer == null){
+			myTimer = new Timer();
+		}
+		myTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
+				loginInThread.start();
+			}
+		}, 1000 * 60, 1000 * 60);
 	}
 }
