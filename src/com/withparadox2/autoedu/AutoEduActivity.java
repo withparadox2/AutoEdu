@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.*;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
@@ -29,14 +30,29 @@ public class AutoEduActivity extends Activity {
 	public final static int START_LOGIN = 1; 
 	public final static int LOGIN_SUCCESSED = 2; 
 	public final static int LOGIN_FAILED = 3;
+	public final static int OPENNING_WIFI = 4;
+	public final static int OPENNING_WIFI_SUCCEED = 5;
+	public final static int SCAN_WIFI_START = 6;
+	public final static int SCAN_WIFI_OVER = 7;
+	public final static int SCAN_EDU_SUCCEED = 8;
+	public final static int SCAN_EDU_FAILED = 9;
+	public final static int CONNECT_TO_EDU_START = 10;
+	public final static int CONNECT_TO_EDU_OVER = 11;
+	public final static int CONNECT_TO_EDU_SUCCEED = 12;
+
+
+
+
+
 
 	public final static int FORCE_LOGIN = 0;
 	public final static int NORMAL_LOGIN = 1;
 
 	private final static String SP_NAME = "temp_data";
-	public final static String SSID = "ssid";
+	public final static String SSID_SP = "ssid";
 	public final static String WLANACNAME = "wlanacname";
 	public final static String WLANUSERIP = "wlanuserip";
+	public final static String SSID = "\"" + "360-ZS1BD0" + "\"";
 
 	private Context context;
 
@@ -46,6 +62,7 @@ public class AutoEduActivity extends Activity {
 	private Button refreshButton;
 
 	private Timer myTimer;
+	private WifiHelper wifiHelper;
 
 	private final static String TAG = "AutoEdu";
 
@@ -59,59 +76,17 @@ public class AutoEduActivity extends Activity {
 		refreshButton.setOnClickListener(new OnButtonClickListener());
 		context = this;
 		myHandler = new MyHandler(Looper.myLooper());
-//		if(isStartLogin()){
-//			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
-//			loginInThread.start();
-//		}
-//		autoUpdateEdu();
-		wifiTest();
+		wifiHelper = new WifiHelper(context, myHandler);
+		if(!wifiHelper.isStartLogin()){
+			wifiHelper.openWifiByTest();
+		}else{
+			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
+			loginInThread.start();
+		}
 
 	}
 
-	private void wifiTest(){
-		WifiManager wifiManager  =(WifiManager)getSystemService(Context.WIFI_SERVICE);
-		if(!wifiManager.isWifiEnabled()){
-			wifiManager.setWifiEnabled(true);
-			messageText.setText("正在打开wifi...");
-		}
-		while (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED){
-			Thread.currentThread();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		wifiManager.startScan();
-		messageText.setText("正在扫描...");
-		registerReceiver(new WifiReceiver(wifiManager), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-	}
 
-	private class WifiReceiver extends BroadcastReceiver{
-		private WifiManager wifiManager;
-
-		public WifiReceiver(WifiManager wifiManager){
-			this.wifiManager = wifiManager;
-		}
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			List<ScanResult> scanResults = wifiManager.getScanResults();
-			if(scanResults != null && scanResults.size() > 0){
-				String ssid;
-				int k = 0;
-				for (ScanResult sItem : scanResults){
-					Log.d(TAG, "==============================="+k + sItem.SSID);
-					k++;
-					if(sItem.SSID.equals("360-ZS1BD0")){
-						messageText.setText("正在连接360-ZS1BD0");
-						WifiConfiguration configuration = new WifiConfiguration();
-						return;
-					}
-					messageText.setText("没有搜索到CMCC-EDU");
-				}
-			}
-		}
-	}
 
 	@Override
 	protected void onDestroy() {
@@ -126,45 +101,15 @@ public class AutoEduActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			if(isStartLogin()){
+			if(wifiHelper.isStartLogin()){
 				loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
 				loginInThread.start();
+			}else {
+				wifiHelper.openWifiByTest();
 			}
 		}
 	}
 
-
-	public boolean isWifiConnected(Context context) { 
-		if (context != null) { 
-			ConnectivityManager mConnectivityManager = (ConnectivityManager) context 
-					.getSystemService(Context.CONNECTIVITY_SERVICE); 
-			NetworkInfo mWiFiNetworkInfo = mConnectivityManager 
-					.getNetworkInfo(ConnectivityManager.TYPE_WIFI); 
-			if (mWiFiNetworkInfo != null) { 
-				return mWiFiNetworkInfo.isAvailable(); 
-			} 
-		} 
-		return false; 
-	}
-
-	private boolean isConnectToEdu(){
-		WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
-		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-		if(wifiInfo != null && wifiInfo.getSSID().equals("CMCC-EDU")){
-			return true;
-		}else{
-			return false;
-		}
-	}
-
-	private boolean isStartLogin(){
-		if(isWifiConnected(context) && isConnectToEdu()){
-			return true;
-		}else{
-			messageText.setText("未连接到CMCC-EDU...");
-			return false;
-		}
-	}
 
 	class MyHandler extends Handler{
 
@@ -175,18 +120,44 @@ public class AutoEduActivity extends Activity {
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			switch (msg.arg1) {
-			case START_LOGIN:
-				messageText.setText(getStr(R.string.start_login));
-				break;
-			case LOGIN_SUCCESSED:
-				messageText.setText(getStr(R.string.login_successed));
-				break;
-			case NET_OK:
-				messageText.setText(getStr(R.string.login_successed));
-				break;				
-			case LOGIN_FAILED:
-				messageText.setText(getStr(R.string.login_failed));
-				break;				
+				case START_LOGIN:
+					messageText.setText(getStr(R.string.start_login));
+					break;
+				case LOGIN_SUCCESSED:
+					messageText.setText(getStr(R.string.login_successed));
+					break;
+				case NET_OK:
+					messageText.setText(getStr(R.string.login_successed));
+					break;
+				case LOGIN_FAILED:
+					messageText.setText(getStr(R.string.login_failed));
+					break;
+				case OPENNING_WIFI:
+					messageText.setText("正在打开wifi...");
+					break;
+				case OPENNING_WIFI_SUCCEED:
+					messageText.setText("成功打开wifi！");
+					wifiHelper.scanWifi();
+					break;
+				case SCAN_WIFI_START:
+					messageText.setText("正在扫描可用wifi...");
+					break;
+				case SCAN_WIFI_OVER:
+					break;
+				case SCAN_EDU_SUCCEED:
+					messageText.setText("成功扫描到CMCC-EDU！");
+					break;
+				case CONNECT_TO_EDU_START:
+					messageText.setText("正在连接CMCC-EDU...");
+					break;
+				case CONNECT_TO_EDU_SUCCEED:
+					messageText.setText("成功连接到CMCC-EDU！");
+					autoUpdateEdu();
+					break;
+				case SCAN_EDU_FAILED:
+					messageText.setText("未扫描到CMCC-EDU :-(");
+					refreshButton.setText("重新扫描");
+					break;
 			}
 		}
 
@@ -200,7 +171,7 @@ public class AutoEduActivity extends Activity {
 	public static void saveValueInSp(Context ctx, List<String> list){
 		SharedPreferences sp = ctx.getSharedPreferences(SP_NAME, MODE_PRIVATE);
 		SharedPreferences.Editor editor = sp.edit();
-		editor.putString(SSID, list.get(0));
+		editor.putString(SSID_SP, list.get(0));
 		editor.putString(WLANACNAME, list.get(1));
 		editor.putString(WLANUSERIP, list.get(2));
 		editor.commit();
@@ -209,7 +180,7 @@ public class AutoEduActivity extends Activity {
 	public static List<String> getPostParasList(Context ctx){
 		List<String> list = new ArrayList<String>();
 		SharedPreferences sp = ctx.getSharedPreferences(SP_NAME, MODE_PRIVATE);
-		list.add(sp.getString(SSID, ""));
+		list.add(sp.getString(SSID_SP, ""));
 		list.add(sp.getString(WLANACNAME, ""));
 		list.add(sp.getString(WLANUSERIP, ""));
 		return list;
@@ -222,8 +193,13 @@ public class AutoEduActivity extends Activity {
 		myTimer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
-				loginInThread.start();
+				if(wifiHelper.isStartLogin()){
+					loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
+					loginInThread.start();
+				}else{
+					wifiHelper.openWifiByTest();
+				}
+
 			}
 		}, 1000 * 60, 1000 * 60);
 	}
