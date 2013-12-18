@@ -6,16 +6,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -45,6 +47,8 @@ public class AutoEduActivity extends Activity {
 
 	private Timer myTimer;
 
+	private final static String TAG = "AutoEdu";
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,12 +59,58 @@ public class AutoEduActivity extends Activity {
 		refreshButton.setOnClickListener(new OnButtonClickListener());
 		context = this;
 		myHandler = new MyHandler(Looper.myLooper());
-		if(isStartLogin()){
-			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
-			loginInThread.start();
-		}
-		autoUpdateEdu();
+//		if(isStartLogin()){
+//			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
+//			loginInThread.start();
+//		}
+//		autoUpdateEdu();
+		wifiTest();
 
+	}
+
+	private void wifiTest(){
+		WifiManager wifiManager  =(WifiManager)getSystemService(Context.WIFI_SERVICE);
+		if(!wifiManager.isWifiEnabled()){
+			wifiManager.setWifiEnabled(true);
+			messageText.setText("正在打开wifi...");
+		}
+		while (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED){
+			Thread.currentThread();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		wifiManager.startScan();
+		messageText.setText("正在扫描...");
+		registerReceiver(new WifiReceiver(wifiManager), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+	}
+
+	private class WifiReceiver extends BroadcastReceiver{
+		private WifiManager wifiManager;
+
+		public WifiReceiver(WifiManager wifiManager){
+			this.wifiManager = wifiManager;
+		}
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			List<ScanResult> scanResults = wifiManager.getScanResults();
+			if(scanResults != null && scanResults.size() > 0){
+				String ssid;
+				int k = 0;
+				for (ScanResult sItem : scanResults){
+					Log.d(TAG, "==============================="+k + sItem.SSID);
+					k++;
+					if(sItem.SSID.equals("360-ZS1BD0")){
+						messageText.setText("正在连接360-ZS1BD0");
+						WifiConfiguration configuration = new WifiConfiguration();
+						return;
+					}
+					messageText.setText("没有搜索到CMCC-EDU");
+				}
+			}
+		}
 	}
 
 	@Override
