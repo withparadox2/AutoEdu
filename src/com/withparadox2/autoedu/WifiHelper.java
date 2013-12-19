@@ -13,6 +13,7 @@ import android.net.wifi.WifiManager;
 import android.os.Message;
 
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.List;
@@ -24,6 +25,10 @@ public class WifiHelper {
 	private WifiManager wifiManager;
 	private Context context;
 	private Handler myHandler;
+	private boolean connectFlag = true;
+	private WifiReceiver wifiReceiver;
+
+	private static final String TAG = "WifiHelper";
 
 	public  WifiHelper(Context context, Handler myHandler){
 		wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -32,7 +37,9 @@ public class WifiHelper {
 	}
 
 	public void openWifiByTest(){
+		keepConnectToWifiOrEdu();
 		if(!wifiManager.isWifiEnabled()){
+			Log.d(TAG, "openning wifi...");
 			sendMyMessage(AutoEduActivity.OPENNING_WIFI);
 			openWifi();
 		}else{
@@ -43,25 +50,30 @@ public class WifiHelper {
 	public void scanWifi(){
 		sendMyMessage(AutoEduActivity.SCAN_WIFI_START);
 		wifiManager.startScan();
-		context.registerReceiver(new WifiReceiver(wifiManager), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+		wifiReceiver = new WifiReceiver(wifiManager);
+		context.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 	}
 
 	private void openWifi(){
+		wifiManager.setWifiEnabled(true);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				wifiManager.setWifiEnabled(true);
-				while (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED){
+				while (wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED && connectFlag){
 					Thread.currentThread();
 					try {
-						Thread.sleep(100);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				sendMyMessage(AutoEduActivity.OPENNING_WIFI_SUCCEED);
+				if (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED){
+					sendMyMessage(AutoEduActivity.OPENNING_WIFI_SUCCEED);
+				}else {
+					sendMyMessage(AutoEduActivity.OPENNING_WIFI_FAILED);
+				}
 			}
-		});
+		}).start();
 	}
 
 
@@ -74,12 +86,23 @@ public class WifiHelper {
 		}
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			if(isConnectToEdu()){
+			Log.d(TAG, "接收广播...");
+			if(isStartLogin()){
 				sendMyMessage(AutoEduActivity.CONNECT_TO_EDU_SUCCEED);
 			}else{
-				doAfterScanOver();
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						doAfterScanOver();
+					}
+				}).start();
 			}
+			unRegisterReceiver();
 		}
+	}
+
+	private void unRegisterReceiver(){
+		context.unregisterReceiver(wifiReceiver);
 	}
 
 	private void doAfterScanOver(){
@@ -87,20 +110,26 @@ public class WifiHelper {
 		List<ScanResult> scanResults = wifiManager.getScanResults();
 		if(scanResults != null && scanResults.size() > 0){
 			for (ScanResult sItem : scanResults){
-				if(sItem.SSID.equals(AutoEduActivity.SSID)){
+				Log.d(TAG, sItem.SSID + "==" + AutoEduActivity.SSID + "    " + TextUtils.equals(sItem.SSID, AutoEduActivity.SSID));
+				if(TextUtils.equals(sItem.SSID, AutoEduActivity.SSID_PLAIN)){
 					sendMyMessage(AutoEduActivity.SCAN_EDU_SUCCEED);
 					int netID = wifiManager.addNetwork(getConfiguration());
 					wifiManager.enableNetwork(netID, false);
 					sendMyMessage(AutoEduActivity.CONNECT_TO_EDU_START);
 					wifiManager.reconnect();
-					while (!isConnectToEdu()){
+					while (!isConnectToEdu() && connectFlag){
+						Thread.currentThread();
 						try {
 							Thread.sleep(100);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					}
-					sendMyMessage(AutoEduActivity.CONNECT_TO_EDU_SUCCEED);
+					if(isConnectToEdu()){
+						sendMyMessage(AutoEduActivity.CONNECT_TO_EDU_SUCCEED);
+					}else{
+						sendMyMessage(AutoEduActivity.CONNECT_TO_EDU_FAILED);
+					}
 					return;
 				}
 				sendMyMessage(AutoEduActivity.SCAN_EDU_FAILED);
@@ -110,7 +139,9 @@ public class WifiHelper {
 
 	private boolean isConnectToEdu(){
 		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-		if(wifiInfo != null && wifiInfo.getSSID().equals(AutoEduActivity.SSID)){
+		Log.d(TAG,"WifiInfo=null : " + (wifiInfo == null));
+		Log.d(TAG,"ssid : " + wifiInfo.getSSID());
+		if(wifiInfo != null && wifiInfo.getSSID() != null && TextUtils.equals(wifiInfo.getSSID(), AutoEduActivity.SSID_PLAIN)){
 			return true;
 		}else{
 			return false;
@@ -145,12 +176,13 @@ public class WifiHelper {
 			WifiConfiguration config = new WifiConfiguration();
 			config.SSID = AutoEduActivity.SSID;
 			config.preSharedKey = "\"" + "12345678" + "\"";
+//			config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 			return config;
 		}
 	}
 
 
-	private WifiConfiguration getExistConfigurationOrNull(String SSID){
+	public WifiConfiguration getExistConfigurationOrNull(String SSID){
 		List<WifiConfiguration> configurations = wifiManager.getConfiguredNetworks();
 		for (WifiConfiguration configuration : configurations){
 			if(configuration.SSID.equals(SSID)){
@@ -164,5 +196,17 @@ public class WifiHelper {
 		Message msg = myHandler.obtainMessage();
 		msg.arg1 = arg;
 		msg.sendToTarget();
+	}
+
+	public void cancelConnectToWifiOrEdu(){
+		connectFlag = false;
+	}
+
+	public void keepConnectToWifiOrEdu(){
+		connectFlag = true;
+	}
+
+	public boolean getConnectFlag(){
+		return connectFlag;
 	}
 }

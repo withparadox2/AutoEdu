@@ -7,18 +7,11 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.*;
-import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -39,6 +32,8 @@ public class AutoEduActivity extends Activity {
 	public final static int CONNECT_TO_EDU_START = 10;
 	public final static int CONNECT_TO_EDU_OVER = 11;
 	public final static int CONNECT_TO_EDU_SUCCEED = 12;
+	public final static int OPENNING_WIFI_FAILED = 13;
+	public final static int CONNECT_TO_EDU_FAILED = 14;
 
 
 
@@ -53,6 +48,10 @@ public class AutoEduActivity extends Activity {
 	public final static String WLANACNAME = "wlanacname";
 	public final static String WLANUSERIP = "wlanuserip";
 	public final static String SSID = "\"" + "360-ZS1BD0" + "\"";
+	public final static String SSID_PLAIN = "360-ZS1BD0";
+//	public final static String SSID = "\"" + "CMCC-EDU" + "\"";
+//	public final static String SSID_PLAIN = "CMCC-EDU";
+
 
 	private Context context;
 
@@ -65,6 +64,7 @@ public class AutoEduActivity extends Activity {
 	private WifiHelper wifiHelper;
 
 	private final static String TAG = "AutoEdu";
+
 
 
 	@Override
@@ -83,6 +83,7 @@ public class AutoEduActivity extends Activity {
 			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
 			loginInThread.start();
 		}
+		autoUpdateEdu();
 
 	}
 
@@ -139,6 +140,10 @@ public class AutoEduActivity extends Activity {
 					messageText.setText("成功打开wifi！");
 					wifiHelper.scanWifi();
 					break;
+				case OPENNING_WIFI_FAILED:
+					messageText.setText("打开wifi失败！");
+					refreshButton.setText("重新打开");
+					break;
 				case SCAN_WIFI_START:
 					messageText.setText("正在扫描可用wifi...");
 					break;
@@ -152,8 +157,11 @@ public class AutoEduActivity extends Activity {
 					break;
 				case CONNECT_TO_EDU_SUCCEED:
 					messageText.setText("成功连接到CMCC-EDU！");
-					autoUpdateEdu();
+					forceLogin();
 					break;
+				case CONNECT_TO_EDU_FAILED:
+					messageText.setText("连接到CMCC-EDU失败！");
+					refreshButton.setText("重新连接");
 				case SCAN_EDU_FAILED:
 					messageText.setText("未扫描到CMCC-EDU :-(");
 					refreshButton.setText("重新扫描");
@@ -189,18 +197,26 @@ public class AutoEduActivity extends Activity {
 	private void autoUpdateEdu(){
 		if(myTimer == null){
 			myTimer = new Timer();
-		}
-		myTimer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				if(wifiHelper.isStartLogin()){
-					loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
-					loginInThread.start();
-				}else{
-					wifiHelper.openWifiByTest();
-				}
+			myTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					if(wifiHelper.isStartLogin()){
+						loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
+						loginInThread.start();
+					}else{
+						wifiHelper.openWifiByTest();
+						refreshButton.setText("重新扫描");
+					}
 
-			}
-		}, 1000 * 60, 1000 * 60);
+				}
+			}, 1000 * 60, 1000 * 60);
+		}
+	}
+
+	private void forceLogin(){
+		if(wifiHelper.isStartLogin()){
+			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
+			loginInThread.start();
+		}
 	}
 }
