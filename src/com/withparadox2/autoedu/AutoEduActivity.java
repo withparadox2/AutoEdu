@@ -78,7 +78,7 @@ public class AutoEduActivity extends Activity {
 		myHandler = new MyHandler(Looper.myLooper());
 		wifiHelper = new WifiHelper(context, myHandler);
 		if(!wifiHelper.isStartLogin()){
-			wifiHelper.openWifiByTest();
+//			wifiHelper.openWifiByTest();
 		}else{
 			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
 			loginInThread.start();
