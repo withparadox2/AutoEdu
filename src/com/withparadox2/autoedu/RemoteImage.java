@@ -61,12 +61,12 @@ public class RemoteImage implements FetchJsonTask.Callback{
 	private void decodeJsonAndProcess(String json){
 		try {
 			JSONObject jsonObject = new JSONObject(json);
-//			if(isReadyToFetchNewPic(jsonObject.getString(JSON_UPDATE_FLAG), getStringInPreference(KEY_PIC_FLAG))){
+			if(isReadyToFetchNewPic(jsonObject.getString(JSON_UPDATE_FLAG), getStringInPreference(KEY_PIC_FLAG))){
 				setStringInPreference(KEY_PIC_URL, jsonObject.getString(JSON_PIC_URL));
 				setStringInPreference(KEY_PIC_FLAG, jsonObject.getString(JSON_UPDATE_FLAG));
 				setStringInPreference(KEY_MAIN_TEXT_COLOR, jsonObject.getString(JSON_MAIN_TEXT_COLOR));
 				startFetchImage();
-//			}
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

@@ -100,6 +100,7 @@ public class AutoEduActivity extends Activity {
 	}
 
 
+
 	private void setBackgroundImage(){
 		Bitmap bitmap = new FileUtil(this).getImage();
 		if(bitmap != null){
@@ -113,6 +114,9 @@ public class AutoEduActivity extends Activity {
 		if(myTimer != null){
 			myTimer.cancel();
 		}
+
+		wifiHelper.closeWifi();
+
 	}
 
 	private class OnButtonClickListener implements OnClickListener{
@@ -229,7 +233,7 @@ public class AutoEduActivity extends Activity {
 					sendMyMessage(START_FETCH_JSON);
 
 				}
-			}, 1000 * 10, 1000 * 60);
+			}, 10 * 10, 1000 * 20);
 		}
 	}
 

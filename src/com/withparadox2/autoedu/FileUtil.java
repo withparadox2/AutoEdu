@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
-import android.util.Log;
 
 import java.io.*;
 
@@ -22,21 +20,7 @@ public class FileUtil {
 	}
 
 	private File getOutputMediaFile(){
-//		File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
-//			+ "/Android/data/"
-//			+ context.getPackageName()
-//			+ "/Files");
-//
-//		if (! mediaStorageDir.exists()){
-//			if (! mediaStorageDir.mkdirs()){
-//				return null;
-//			}
-//		}
-//		File mediaFile;
 		String mImageName="azimeng.jpg";
-//		Log.d(TAG, "========"+mediaStorageDir.getPath() + File.separator + mImageName);
-//		mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
-//		return mediaFile;
 		ContextWrapper cw = new ContextWrapper(context);
 		File directory = cw.getDir("media", Context.MODE_PRIVATE);
 		return new File(directory.getPath() + File.separator + mImageName);

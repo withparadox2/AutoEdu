@@ -76,6 +76,12 @@ public class WifiHelper {
 		}).start();
 	}
 
+	public void closeWifi(){
+		if(wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLED){
+			wifiManager.setWifiEnabled(false);
+		}
+	}
+
 
 
 	private class WifiReceiver extends BroadcastReceiver {
