@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.content.*;
@@ -12,9 +13,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class AutoEduActivity extends Activity {
@@ -35,6 +39,8 @@ public class AutoEduActivity extends Activity {
 	public final static int OPENNING_WIFI_FAILED = 13;
 	public final static int CONNECT_TO_EDU_FAILED = 14;
 
+	public final static int START_FETCH_JSON = 30;
+
 
 
 
@@ -47,10 +53,10 @@ public class AutoEduActivity extends Activity {
 	public final static String SSID_SP = "ssid";
 	public final static String WLANACNAME = "wlanacname";
 	public final static String WLANUSERIP = "wlanuserip";
-	public final static String SSID = "\"" + "360-ZS1BD0" + "\"";
-	public final static String SSID_PLAIN = "360-ZS1BD0";
-//	public final static String SSID = "\"" + "CMCC-EDU" + "\"";
-//	public final static String SSID_PLAIN = "CMCC-EDU";
+//	public final static String SSID = "\"" + "360-ZS1BD0" + "\"";
+//	public final static String SSID_PLAIN = "360-ZS1BD0";
+	public final static String SSID = "\"" + "CMCC-EDU" + "\"";
+	public final static String SSID_PLAIN = "CMCC-EDU";
 
 
 	private Context context;
@@ -65,6 +71,7 @@ public class AutoEduActivity extends Activity {
 
 	private final static String TAG = "AutoEdu";
 
+	private RemoteImage remoteImage;
 
 
 	@Override
@@ -79,12 +86,13 @@ public class AutoEduActivity extends Activity {
 		wifiHelper = new WifiHelper(context, myHandler);
 		if(!wifiHelper.isStartLogin()){
 //			wifiHelper.openWifiByTest();
+			messageText.setText("未连接edu...");
 		}else{
 			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
 			loginInThread.start();
 		}
 		autoUpdateEdu();
-
+		remoteImage = new RemoteImage(this, (ImageView) findViewById(R.id.imageview_background));
 	}
 
 
@@ -106,7 +114,7 @@ public class AutoEduActivity extends Activity {
 				loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
 				loginInThread.start();
 			}else {
-				wifiHelper.openWifiByTest();
+//				wifiHelper.openWifiByTest();
 			}
 		}
 	}
@@ -166,6 +174,9 @@ public class AutoEduActivity extends Activity {
 					messageText.setText("未扫描到CMCC-EDU :-(");
 					refreshButton.setText("重新扫描");
 					break;
+				case START_FETCH_JSON:
+					remoteImage.startFetchJson();
+					break;
 			}
 		}
 
@@ -204,13 +215,18 @@ public class AutoEduActivity extends Activity {
 						loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
 						loginInThread.start();
 					}else{
-						wifiHelper.openWifiByTest();
-						refreshButton.setText("重新扫描");
 					}
+					sendMyMessage(START_FETCH_JSON);
 
 				}
-			}, 1000 * 60, 1000 * 60);
+			}, 1000 * 10, 1000 * 60);
 		}
+	}
+
+	private void sendMyMessage(int arg){
+		Message msg = myHandler.obtainMessage();
+		msg.arg1 = arg;
+		msg.sendToTarget();
 	}
 
 	private void forceLogin(){
