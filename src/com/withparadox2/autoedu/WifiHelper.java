@@ -139,8 +139,8 @@ public class WifiHelper {
 
 	private boolean isConnectToEdu(){
 		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-		Log.d(TAG,"WifiInfo=null : " + (wifiInfo == null));
-		Log.d(TAG,"ssid : " + wifiInfo.getSSID());
+//		Log.d(TAG,"WifiInfo=null : " + (wifiInfo == null));
+//		Log.d(TAG,"ssid : " + wifiInfo.getSSID());
 		if(wifiInfo != null && wifiInfo.getSSID() != null && TextUtils.equals(wifiInfo.getSSID(), AutoEduActivity.SSID_PLAIN)){
 			return true;
 		}else{

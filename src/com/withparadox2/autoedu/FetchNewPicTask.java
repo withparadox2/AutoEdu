@@ -1,5 +1,6 @@
 package com.withparadox2.autoedu;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -17,6 +18,12 @@ import java.net.URL;
 public class FetchNewPicTask extends AsyncTask<ImageView, Void, Bitmap>{
 
 	private ImageView imageView;
+	private Context context;
+
+	public FetchNewPicTask(Context context){
+		this.context = context;
+
+	}
 
 	@Override
 	protected Bitmap doInBackground(ImageView... params) {
@@ -28,6 +35,7 @@ public class FetchNewPicTask extends AsyncTask<ImageView, Void, Bitmap>{
 	protected void onPostExecute(Bitmap bitmap) {
 		if (bitmap != null){
 			imageView.setImageBitmap(bitmap);
+			new FileUtil(context).storeImage(bitmap);
 		}
 	}
 

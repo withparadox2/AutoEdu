@@ -74,7 +74,7 @@ public class RemoteImage implements FetchJsonTask.Callback{
 
 	private void startFetchImage(){
 		imageView.setTag(getStringInPreference(KEY_PIC_URL));
-		new FetchNewPicTask().execute(imageView);
+		new FetchNewPicTask(activity).execute(imageView);
 	}
 
 	public void startFetchJson(){

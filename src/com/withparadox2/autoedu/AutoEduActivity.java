@@ -9,6 +9,7 @@ import java.util.zip.Inflater;
 import android.app.Activity;
 import android.content.*;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -72,6 +73,7 @@ public class AutoEduActivity extends Activity {
 	private final static String TAG = "AutoEdu";
 
 	private RemoteImage remoteImage;
+	private ImageView imageView;
 
 
 	@Override
@@ -92,10 +94,18 @@ public class AutoEduActivity extends Activity {
 			loginInThread.start();
 		}
 		autoUpdateEdu();
-		remoteImage = new RemoteImage(this, (ImageView) findViewById(R.id.imageview_background));
+		imageView = (ImageView) findViewById(R.id.imageview_background);
+		remoteImage = new RemoteImage(this, imageView);
+		setBackgroundImage();
 	}
 
 
+	private void setBackgroundImage(){
+		Bitmap bitmap = new FileUtil(this).getImage();
+		if(bitmap != null){
+			imageView.setImageBitmap(bitmap);
+		}
+	}
 
 	@Override
 	protected void onDestroy() {
