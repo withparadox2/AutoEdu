@@ -36,11 +36,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1585ac2c-baf4-4e3e-a565-f6da5ddb6e59" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/withparadox2/autoedu/BuildConfig.java" afterPath="$PROJECT_DIR$/gen/com/withparadox2/autoedu/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/FileUtil.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/FileUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
     </list>
     <ignored path="AutoEdu.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,39 +105,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AutoEduActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="workspace.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="6" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0" vertical-offset="2074" max-vertical-offset="14297">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AutoEduActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="169" column="57" selection-start="4762" selection-end="4762" vertical-scroll-proportion="0.0" vertical-offset="2163" max-vertical-offset="4029">
+            <state line="206" column="48" selection-start="5923" selection-end="5923" vertical-scroll-proportion="4.0167866" vertical-offset="1487" max-vertical-offset="4046">
               <folding>
-                <element signature="e#4256#4280#0" expanded="true" />
-                <element signature="e#4351#4372#0" expanded="true" />
-                <element signature="e#5932#5940#0" expanded="true" />
-                <element signature="e#6260#6536#0" expanded="true" />
-                <element signature="e#6530#6531#0" expanded="true" />
+                <element signature="e#6177#6185#0" expanded="true" />
+                <element signature="e#6505#6781#0" expanded="true" />
+                <element signature="e#6775#6776#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="workspace.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="6" selection-start="67" selection-end="67" vertical-scroll-proportion="-4.9653463" vertical-offset="2040" max-vertical-offset="14059">
+            <state line="10" column="18" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="442">
               <folding />
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="21" selection-start="785" selection-end="785" vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="663">
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
           </provider>
         </entry>
       </file>
@@ -244,8 +235,9 @@
         <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/FileUtil.java" />
         <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java" />
         <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java" />
-        <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java" />
       </list>
     </option>
   </component>
@@ -315,6 +307,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="autoedu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutoEdu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AutoEdu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -609,11 +619,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="93" column="0" selection-start="2967" selection-end="2967" vertical-scroll-proportion="0.0" vertical-offset="1581" max-vertical-offset="4301">
           <folding>
-            <element signature="e#4256#4280#0" expanded="true" />
-            <element signature="e#4351#4372#0" expanded="true" />
-            <element signature="e#5932#5940#0" expanded="true" />
-            <element signature="e#6260#6536#0" expanded="true" />
-            <element signature="e#6530#6531#0" expanded="true" />
+            <element signature="e#6177#6185#0" expanded="true" />
+            <element signature="e#6505#6781#0" expanded="true" />
+            <element signature="e#6775#6776#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -797,23 +805,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="57" selection-start="4762" selection-end="4762" vertical-scroll-proportion="0.0" vertical-offset="2163" max-vertical-offset="4029">
-          <folding>
-            <element signature="e#4256#4280#0" expanded="true" />
-            <element signature="e#4351#4372#0" expanded="true" />
-            <element signature="e#5932#5940#0" expanded="true" />
-            <element signature="e#6260#6536#0" expanded="true" />
-            <element signature="e#6530#6531#0" expanded="true" />
-          </folding>
+        <state line="4" column="6" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0" vertical-offset="2074" max-vertical-offset="14756">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="6" selection-start="67" selection-end="67" vertical-scroll-proportion="-4.9653463" vertical-offset="2040" max-vertical-offset="14059">
+        <state line="10" column="18" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="442">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="206" column="48" selection-start="5923" selection-end="5923" vertical-scroll-proportion="4.0167866" vertical-offset="1487" max-vertical-offset="4046">
+          <folding>
+            <element signature="e#6177#6185#0" expanded="true" />
+            <element signature="e#6505#6781#0" expanded="true" />
+            <element signature="e#6775#6776#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -156,37 +156,38 @@ public class AutoEduActivity extends Activity {
 					messageText.setText(getStr(R.string.login_failed));
 					break;
 				case OPENNING_WIFI:
-					messageText.setText("正在打开wifi...");
+					messageText.setText(getStr(R.string.openning_wifi));
 					break;
 				case OPENNING_WIFI_SUCCEED:
-					messageText.setText("成功打开wifi！");
+					messageText.setText(getStr(R.string.open_wifi_successed));
 					wifiHelper.scanWifi();
 					break;
 				case OPENNING_WIFI_FAILED:
-					messageText.setText("打开wifi失败！");
-					refreshButton.setText("重新打开");
+					messageText.setText(getStr(R.string.open_wifi_failed));
+					refreshButton.setText(getStr(R.string.reopen_wifi));
 					break;
 				case SCAN_WIFI_START:
-					messageText.setText("正在扫描可用wifi...");
+					messageText.setText(getStr(R.string.scanning_useful_wifi));
 					break;
 				case SCAN_WIFI_OVER:
 					break;
 				case SCAN_EDU_SUCCEED:
-					messageText.setText("成功扫描到CMCC-EDU！");
+					messageText.setText(getStr(R.string.scan_edu_successed));
 					break;
 				case CONNECT_TO_EDU_START:
-					messageText.setText("正在连接CMCC-EDU...");
+					messageText.setText(getStr(R.string.connecting_edu));
 					break;
 				case CONNECT_TO_EDU_SUCCEED:
-					messageText.setText("成功连接到CMCC-EDU！");
+					messageText.setText(getStr(R.string.connect_edu_successed));
 					forceLogin();
 					break;
 				case CONNECT_TO_EDU_FAILED:
-					messageText.setText("连接到CMCC-EDU失败！");
-					refreshButton.setText("重新连接");
+					messageText.setText(getStr(R.string.connect_edu_failed));
+					refreshButton.setText(getStr(R.string.reconnect));
+					break;
 				case SCAN_EDU_FAILED:
-					messageText.setText("未扫描到CMCC-EDU :-(");
-					refreshButton.setText("重新扫描");
+					messageText.setText(getStr(R.string.scan_edu_failed));
+					refreshButton.setText(getStr(R.string.rescan));
 					break;
 				case START_FETCH_JSON:
 					remoteImage.startFetchJson();
@@ -233,7 +234,7 @@ public class AutoEduActivity extends Activity {
 					sendMyMessage(START_FETCH_JSON);
 
 				}
-			}, 10 * 10, 1000 * 20);
+			}, 1000 * 60, 1000 * 60);
 		}
 	}
 

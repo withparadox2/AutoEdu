@@ -6,5 +6,16 @@
     <string name="login_successed">登陆成功\no(≧v≦)o</string>
     <string name="start_login">正在连接...</string>
     <string name="login_failed">登陆失败\n-_-!</string>
-
+	<string name="openning_wifi">"正在打开wifi..."</string>
+	<string name="open_wifi_successed">"成功打开wifi！"</string>
+	<string name="open_wifi_failed">"打开wifi失败！"</string>
+	<string name="reopen_wifi">"重新打开"</string>
+	<string name="scanning_useful_wifi">"正在扫描可用wifi..."</string>
+	<string name="scan_edu_successed">"成功扫描到CMCC-EDU！"</string>
+	<string name="scan_edu_failed">"未扫描到CMCC-EDU :-("</string>
+	<string name="rescan">"重新扫描"</string>
+	<string name="connecting_edu">"正在连接CMCC-EDU..."</string>
+	<string name="connect_edu_successed">"成功连接到CMCC-EDU！"</string>
+	<string name="connect_edu_failed">"连接到CMCC-EDU失败！"</string>
+	<string name="reconnect">"重新连接"</string>
 </resources>
