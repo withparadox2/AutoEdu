@@ -7,23 +7,27 @@ import java.util.TimerTask;
 import java.util.zip.Inflater;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.*;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.ViewGroup;
+import android.widget.*;
 
 public class AutoEduActivity extends Activity {
 	/** Called when the activity is first created. */
+
 	public final static int NET_OK = 0; 
 	public final static int START_LOGIN = 1; 
 	public final static int LOGIN_SUCCESSED = 2; 
@@ -70,10 +74,12 @@ public class AutoEduActivity extends Activity {
 	private Timer myTimer;
 	private WifiHelper wifiHelper;
 
-	private final static String TAG = "AutoEdu";
+	private final static String TAG = AutoEduActivity.class.getName();
 
 	private RemoteImage remoteImage;
 	private ImageView imageView;
+
+	private  TextView azimentText;
 
 
 	@Override
@@ -81,13 +87,14 @@ public class AutoEduActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		messageText = (TextView)findViewById(R.id.message_text);
+		azimentText = (TextView)findViewById(R.id.azimeng_text);
 		refreshButton = (Button)findViewById(R.id.force_refresh_button);
 		refreshButton.setOnClickListener(new OnButtonClickListener());
 		context = this;
 		myHandler = new MyHandler(Looper.myLooper());
 		wifiHelper = new WifiHelper(context, myHandler);
 		if(!wifiHelper.isStartLogin()){
-//			wifiHelper.openWifiByTest();
+			wifiHelper.openWifiByTest();
 			messageText.setText("未连接edu...");
 		}else{
 			loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, NORMAL_LOGIN);
@@ -95,8 +102,9 @@ public class AutoEduActivity extends Activity {
 		}
 		autoUpdateEdu();
 		imageView = (ImageView) findViewById(R.id.imageview_background);
-		remoteImage = new RemoteImage(this, imageView);
+		remoteImage = new RemoteImage(this, imageView, azimentText);
 		setBackgroundImage();
+		remoteImage.setAzimengText();
 	}
 
 
@@ -107,6 +115,8 @@ public class AutoEduActivity extends Activity {
 			imageView.setImageBitmap(bitmap);
 		}
 	}
+
+
 
 	@Override
 	protected void onDestroy() {
@@ -128,7 +138,7 @@ public class AutoEduActivity extends Activity {
 				loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
 				loginInThread.start();
 			}else {
-//				wifiHelper.openWifiByTest();
+				wifiHelper.openWifiByTest();
 			}
 		}
 	}
@@ -201,6 +211,11 @@ public class AutoEduActivity extends Activity {
 		return context.getResources().getString(id);
 	}
 
+	private String getStringInPreference(String key, String def){
+		SharedPreferences sharedPreferences = this.getSharedPreferences(RemoteImage.PREFERENCE_NAME, Context.MODE_PRIVATE);
+		return sharedPreferences.getString(key, def);
+	}
+
 
 	public static void saveValueInSp(Context ctx, List<String> list){
 		SharedPreferences sp = ctx.getSharedPreferences(SP_NAME, MODE_PRIVATE);
@@ -230,11 +245,12 @@ public class AutoEduActivity extends Activity {
 						loginInThread = new LoginInThread(myHandler, AutoEduActivity.this, FORCE_LOGIN);
 						loginInThread.start();
 					}else{
+						wifiHelper.openWifiByTest();
 					}
 					sendMyMessage(START_FETCH_JSON);
 
 				}
-			}, 1000 * 60, 1000 * 60);
+			}, 1000 * 30, 1000 * 30);
 		}
 	}
 

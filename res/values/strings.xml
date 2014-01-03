@@ -18,4 +18,7 @@
 	<string name="connect_edu_successed">"成功连接到CMCC-EDU！"</string>
 	<string name="connect_edu_failed">"连接到CMCC-EDU失败！"</string>
 	<string name="reconnect">"重新连接"</string>
+
+	<!--xml-Main-->
+	<string name="main_login">登陆</string>
 </resources>

@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+	android:id="@+id/framelayout">
+
 	<ImageView
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:id="@+id/imageview_background"
 		android:scaleType="fitXY"
 		android:adjustViewBounds="false"
-		android:src="@drawable/flower"/>
+		android:background="@color/cadetblue"/>
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/azimeng_text"/>
 	<LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
@@ -24,7 +30,7 @@
         android:textSize="20sp"/>
     <Button 
         android:id="@+id/force_refresh_button"
-        android:text="登陆"
+        android:text="@string/main_login"
         android:textColor="@color/darker_purple"
         android:background="@drawable/button_background"
         android:layout_width="90dp"
