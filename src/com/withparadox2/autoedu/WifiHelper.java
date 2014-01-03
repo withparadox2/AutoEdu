@@ -181,8 +181,8 @@ public class WifiHelper {
 		}else {
 			WifiConfiguration config = new WifiConfiguration();
 			config.SSID = AutoEduActivity.SSID;
-			config.preSharedKey = "\"" + "12345678" + "\"";
-//			config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+//			config.preSharedKey = "\"" + "12345678" + "\"";
+			config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
 			return config;
 		}
 	}

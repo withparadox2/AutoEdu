@@ -35,14 +35,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1585ac2c-baf4-4e3e-a565-f6da5ddb6e59" name="Default" comment="">
-      <change type="DELETED" beforePath="F:\guishidan\other\android-develop\projects\AutoEdu\res\drawable\flower.jpg" afterPath="" />
-      <change type="DELETED" beforePath="F:\guishidan\other\android-develop\projects\AutoEdu\res\drawable\leaf.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/FetchJsonTask.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/FetchJsonTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/Util.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/Util.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main.xml" afterPath="$PROJECT_DIR$/res/layout/main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java" afterPath="$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AutoEdu.iws" />
@@ -121,6 +114,17 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="AutoEduActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="31" selection-start="1982" selection-end="1982" vertical-scroll-proportion="0.33333334" vertical-offset="486" max-vertical-offset="4216">
+              <folding>
+                <element signature="e#6638#6646#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Color.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../adt-bundle-windows-x86_64-20130522/sdk/sources/android-14/android/graphics/Color.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -165,17 +169,6 @@
                 <element signature="e#209654#209655#0" expanded="false" />
                 <element signature="e#209936#209937#0" expanded="false" />
                 <element signature="e#209976#209977#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RemoteImage.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="33" selection-start="2902" selection-end="2902" vertical-scroll-proportion="1.7419963" vertical-offset="214" max-vertical-offset="2244">
-              <folding>
-                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -270,7 +263,6 @@
         <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/FetchNewPicTask.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/FileUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/FetchJsonTask.java" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
@@ -278,6 +270,7 @@
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java" />
         <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java" />
+        <option value="$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java" />
       </list>
     </option>
   </component>
@@ -719,8 +712,6 @@
           <folding>
             <element signature="e#2657#2751#0" expanded="true" />
             <element signature="e#2744#2745#0" expanded="true" />
-            <element signature="e#5945#5946#0" expanded="true" />
-            <element signature="e#5970#5971#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -846,18 +837,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="31" selection-start="1592" selection-end="1592" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3485">
-          <folding>
-            <element signature="e#2657#2751#0" expanded="true" />
-            <element signature="e#2744#2745#0" expanded="true" />
-            <element signature="e#5945#5946#0" expanded="true" />
-            <element signature="e#5970#5971#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/FetchNewPicTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="48" column="33" selection-start="1205" selection-end="1205" vertical-scroll-proportion="1.4715261" vertical-offset="0" max-vertical-offset="1071">
@@ -967,20 +946,30 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="30" selection-start="3377" selection-end="3377" vertical-scroll-proportion="0.5442561" vertical-offset="1122" max-vertical-offset="4216">
+        <state line="23" column="47" selection-start="652" selection-end="652" vertical-scroll-proportion="-1.1073446" vertical-offset="979" max-vertical-offset="2244">
           <folding>
-            <element signature="e#6638#6646#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/RemoteImage.java">
+    <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/WifiHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="33" selection-start="2902" selection-end="2902" vertical-scroll-proportion="1.7419963" vertical-offset="214" max-vertical-offset="2244">
+        <state line="182" column="43" selection-start="5201" selection-end="5201" vertical-scroll-proportion="0.60828626" vertical-offset="2448" max-vertical-offset="3451">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2657#2751#0" expanded="true" />
+            <element signature="e#2744#2745#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/withparadox2/autoedu/AutoEduActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="31" selection-start="1982" selection-end="1982" vertical-scroll-proportion="0.33333334" vertical-offset="486" max-vertical-offset="4216">
+          <folding>
+            <element signature="e#6638#6646#0" expanded="true" />
           </folding>
         </state>
       </provider>
